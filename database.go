@@ -52,7 +52,7 @@ func add() {
 	fmt.Println("Connected to MongoDB!")
 
 	collection := client.Database("time").Collection("timers")
-	
+
 	username := user()
 
 	hrTime, minTime, secTime, nanoTime := getTime()
@@ -76,9 +76,9 @@ func add() {
 	}
 
 	//fmt.Println("ID is ",result.InsertedID)
-	
+
 	close(client)
-	
+
 	fmt.Println("User timer start at ", hrTime,":",minTime,":",secTime,".",nanoTime)
 }
 
@@ -90,7 +90,7 @@ func close(client *mongo.Client) {
 	}
 
 	//fmt.Println("Connection to MongoDB closed")
-	
+
 }
 
 func diff() {
@@ -133,8 +133,8 @@ func diff() {
 
 	diffHours := endHours - startHours
 	diffMinutes := endMinutes - startMin
-	diffSecounds := endSecounds - startSec 
-	diffNano :=  endNano - startNano 
+	diffSecounds := endSecounds - startSec
+	diffNano :=  endNano - startNano
 
 	if diffMinutes < 0{
 		diffMinutes = 60 + diffMinutes
@@ -146,6 +146,10 @@ func diff() {
 
 	if diffNano < 0 {
 		diffNano = 1.0e+09 + diffNano
+	}
+
+	if diffHours < 0 {
+		diffHours = 24 + diffHours
 	}
 
 	_, err_delete := collection.DeleteOne(context.TODO(), find)
